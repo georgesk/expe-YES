@@ -43,3 +43,18 @@
     box-shadow: 5px 5px 5px #888888;
     background: lightcyan;
 }
+
+.unrollButton {
+    float: left;
+    border-radius: 20px;
+    background: blue;
+    color:lightyellow;
+    font-size: 200%;
+    padding: 2px;
+    margin: 3px;
+}
+
+.unrollEnd {
+    clear:both;
+}
+

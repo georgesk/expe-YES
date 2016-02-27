@@ -1,0 +1,45 @@
+#pagetitle {
+    position:absolute;
+    top:   0px;
+    left:  0px;
+    width: 100%;
+    background: yellow;
+    color:      brown;
+    box-shadow: 0px 10px 5px #888888;
+}
+#pagetitle:hover {
+    font-size: 300%;
+    z-index:   100;
+}
+
+#unrolled {
+    position: absolute;
+    left: 10px;
+    top: 2.5em;
+    width: 73%;
+    bottom: 15px;
+    box-shadow: 10px 10px 5px #888888;
+    border:     1px solid #888888;
+    background: wheat;
+}
+
+#compressed {
+    position: absolute;
+    right: 10px;
+    top: 2.5em;
+    width: 23%;
+    bottom: 15px;
+    box-shadow: 10px 10px 5px #888888;
+    border:     1px solid #888888;
+    background: wheat;
+    overflow: auto;
+}
+
+#compressed div {
+    margin: 10px;
+    border: 1px solid #888888;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 5px 5px 5px #888888;
+    background: lightcyan;
+}

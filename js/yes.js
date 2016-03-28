@@ -6,12 +6,20 @@
  **/
 function unrollFunction(v){
     return function(){
-	console.log(v);
 	var unrolled=$("#unrolled div").first();
 	$("#compressed").prepend(unrolled);
-	removeUnrollStuff(v);
+	// hide parts which are only for compressed displays
+	v.find(".seeCompressed").hide()
 	$("#unrolled").append(v);
 	initCompressed();
+	var i = v.find("iframe").first();
+	if (i){
+	    // reload the iframe's content; this seems to be important for
+	    // video broadcast
+	    var src = i.attr('src');
+	    i.attr('src','');
+	    i.attr('src',src);
+	}
     };
 }
 
@@ -28,14 +36,16 @@ function initCompressed(){
     compressed.sortable();
     compressed.disableSelection();
     var views = compressed.find("div");
+    // show parts which are only for compressed displays
+    views.find(".seeCompressed").hide()
     for (var i=0;i < views.length; i++){
 	var v = $(views[i]);
 	removeUnrollStuff(v); //don't keep old buttons
 	var b=$("<button>", {
-	    "class": "unrollButton",
+	    "class": "unrollButton seeCompressed",
 	}).text("<").click(unrollFunction(v));
 	v.prepend(b);
-	v.append($("<br>",{"class": "unrollEnd",}));
+	v.append($("<br>",{"class": "unrollEnd seeCompressed",}));
     }
 }
 
@@ -51,3 +61,22 @@ $(function() { //will be called when the document is ready
     initCompressed();
 });
 
+/**
+ * variables globales
+ */
+document.success="Success";
+document.failure="Failure";
+
+/**
+ * affiche un message dans une division fugitive, qui apparaît deux secondes
+ * puis disparaît.
+ * @param s le message à afficher
+ * @param option valeur telle que Success, Failure.
+ */
+function message(s, option){
+    var msg=$("#message");
+    msg.html(s);
+    msg.removeClass();
+    msg.addClass(option);
+    msg.fadeIn( 300 ).delay(2000 ).fadeOut( 2000 );
+}

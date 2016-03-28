@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset:utf-8"/>
+    <title>..::| Expe-YES |::..</title>
+    <link rel="stylesheet" href="/css/yes.css"/>
+    <link rel="stylesheet" href="/js/jquery-ui/themes/smoothness/jquery.ui.all.css"/>
+    <script type="text/javascript" src="/js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js/yes.js"></script>
+  </head>
+  <body>
+    <div id="pagetitle">Example expe-YES experiment</div>
+    <div id="unrolled"></div>
+    <div id="compressed"></div>
+    <div class="view" id="webrtc">
+      <p class="seeCompressed">Video feedback</p>
+      {{ videoIframe }}
+    </div>
+    <script type="text/javascript">
+      function view(url){ var i = $("iframe"); i.attr('src',url); }
+    </script>
+    <div class="view" id="author">Authors' description and legal stuff</div>
+    <div class="view" id="authorcomment">The autors describe the experiment</div>
+    <div class="view" id="comments">Comments posted by visitors</div>
+    <div class="view" id="reservations">Reservation engine to manage the access to inline experiments</div>
+    <div class="view" id="params">
+      <h1>Parameters and action buttons for the experiment</h1>
+      {% for b in buttons %}
+      {{b}}
+      <br/>
+      {% endfor %}
+    </div>
+    <div class="view" id="outputs">Data delivered by the previous runs of the experiment</div>
+    <div id="message"></div>
+  </body>
+</html>

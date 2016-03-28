@@ -75,8 +75,27 @@ document.failure="Failure";
  */
 function message(s, option){
     var msg=$("#message");
+    var closeBtn=$("<div>")
+	.text("×")
+	.on('click', function(){
+	    msg.clearQueue();
+	    msg.css({
+		display:"none",
+	    });
+	})
+	.css({
+	    background: "rgba(255, 255, 255, 0.5)",
+	    "border-radius": "4px",
+	    color: "#888",
+	    display: "inline-block",
+	    position: "relative",
+	    right: "-0.5ex",
+	    top: "-1ex",
+	    cursor: "pointer",
+	});
     msg.html(s);
+    msg.append(closeBtn);
     msg.removeClass();
     msg.addClass(option);
-    msg.fadeIn( 300 ).delay(2000 ).fadeOut( 2000 );
+    msg.fadeIn( 300 ).delay(5000 ).fadeOut( 2000 );
 }

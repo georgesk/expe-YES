@@ -14,7 +14,7 @@
     <div id="compressed"></div>
     <div class="view" id="webrtc">
       <p class="seeCompressed">Video feedback</p>
-      {{ videoIframe }}
+      {{ video }}
     </div>
     <script type="text/javascript">
       function view(url){ var i = $("iframe"); i.attr('src',url); }
@@ -22,7 +22,12 @@
     <div class="view" id="author">Authors' description and legal stuff</div>
     <div class="view" id="authorcomment">The autors describe the experiment</div>
     <div class="view" id="comments">Comments posted by visitors</div>
-    <div class="view" id="reservations">Reservation engine to manage the access to inline experiments</div>
+    <div class="view" id="reservations">
+      <h1>Reservation engine to manage the access to inline experiments</h1>
+      <p>
+	Wanted reservation date: <input class="datepicker" type="text" id="wantedDate" onchange="wantedDateChange()"/>
+	</p>
+    </div>
     <div class="view" id="params">
       <h1>Parameters and action buttons for the experiment</h1>
       {% for b in buttons %}

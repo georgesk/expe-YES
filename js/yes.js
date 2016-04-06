@@ -59,6 +59,8 @@ $(function() { //will be called when the document is ready
 	}
     }
     initCompressed();
+    // init datepickers
+    $(".datepicker").datepicker({format: "dd/mm/yyyy",});
 });
 
 /**
@@ -98,4 +100,11 @@ function message(s, option){
     msg.removeClass();
     msg.addClass(option);
     msg.fadeIn( 300 ).delay(5000 ).fadeOut( 2000 );
+}
+
+/**
+ * callback function when the wanted date changes for reservations
+ **/
+function wantedDateChange(){
+    alert($("#wantedDate").val());
 }

@@ -11,15 +11,20 @@ class Root:
     @cherrypy.expose
     def index(self):
         tmpl = env.get_template('index.html')
-        return tmpl.render(
-            videoIframe="""\
+        # contents for the video tab
+        video="""\
     <a href="https://hello.firefox.com/lXFmP8Gfxj0" target="_new">Open "hello" tab.</a>
-            <p>A new tab will be created, you can drag it to make a new window and adapt its size</p>\n""",
-            buttons=[
-                Button(name = "Un",html =  "2+2", action = "action1"),
-                Button(name = "Deux",html =  "3+3", action = "action2"),
-                Button(name = "Tris",html =  "4+4", action = "action3"),
-            ],
+    <p>A new tab will be created, you can drag it to make a new window and adapt its size</p>
+"""
+        # contents for the action tab
+        actionButtons=[
+            Button(name = "Un",   html =  "2+2", action = "action1"),
+            Button(name = "Deux", html =  "3+3", action = "action2"),
+            Button(name = "Tris", html =  "4+4", action = "action3"),
+        ]
+        return tmpl.render(
+            video=video,
+            buttons=actionButtons,
         )
     
     @cherrypy.expose

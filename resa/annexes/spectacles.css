@@ -1,0 +1,28 @@
+body{
+    background: wheat;
+    border: 1px solid orange;
+    margin: 5px;
+}
+
+h1{
+    background: white;
+    border: 1px solid orange;
+    color:red;
+    margin: 0 auto;
+    width: 600px;
+    font-size: 24px;
+}
+
+h1 img{
+    vertical-align: middle;
+}
+
+form table {
+    background: lightyellow;
+}
+form table th, td{
+    background: white;
+}
+form table, th, td{
+    border: 1px solid orange;
+}

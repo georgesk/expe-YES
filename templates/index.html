@@ -9,6 +9,7 @@
     <script type="text/javascript" src="/js/yes.js"></script>
   </head>
   <body>
+    <div id="debug">{{sessionData}}</div>
     <div id="pagetitle">Example expe-YES experiment</div>
     <div id="unrolled"></div>
     <div id="compressed"></div>
@@ -23,10 +24,38 @@
     <div class="view" id="authorcomment">The autors describe the experiment</div>
     <div class="view" id="comments">Comments posted by visitors</div>
     <div class="view" id="reservations">
-      <h1>Reservation engine to manage the access to inline experiments</h1>
-      <p>
-	Wanted reservation date: <input class="datepicker" type="text" id="wantedDate" onchange="wantedDateChange()"/>
-	</p>
+      <h1>Reservations</h1>
+      <form action="#" method="post" onsubmit="submitResa();return false;">
+	<table>
+	  <tr>
+	    <th>Wanted reservation date</th>
+	    <td> <input class="datepicker" type="text" name="wantedDate" id="wantedDate" onchange="wantedDateChange()" value="{{date}}"/></td>
+	  </tr>
+	  <tr>
+	    <th>Name</th>
+	    <td> <input type="text" id="name" name="name" value="{{name}}"/></td>
+	  </tr>
+	  <tr>
+	    <th>E-mail address</th>
+	    <td> <input type="text" name="email" id="email" value="{{email}}"/></td>
+	  </tr>
+	  <tr>
+	    <th>Password</th>
+	    <td><input type="password" name="password" id="password" value="{{password}}"/></td>
+	  </tr>
+	</table>
+	<h2>timeslots</h2>
+	<div id="resa">
+	  {% for t in timeslots %}
+	  {{t}}
+	  {% endfor %}
+	</div>
+	{{resa}}
+	<fieldset>
+	  <legend>Make the reservation</legend>
+	  <input type="submit" value="OK"/>
+	</fieldset>
+      </form>
     </div>
     <div class="view" id="params">
       <h1>Parameters and action buttons for the experiment</h1>

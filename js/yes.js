@@ -106,5 +106,36 @@ function message(s, option){
  * callback function when the wanted date changes for reservations
  **/
 function wantedDateChange(){
-    alert($("#wantedDate").val());
+    window.wantedDate=$("#wantedDate").val();
+    $.get("/reservationsByDate",{wantedDate: window.wantedDate})
+	.done(
+	    function (data){
+		alert(JSON.stringify(data));
+	    }
+	)
+	.fail(
+	    function(){
+		alert("wantedDate failed");
+	    }
+	);
+}
+
+/**
+ * callback function for sublitted reservations
+ **/
+function submitResa(){
+    $.get("/makeResa",{
+	name      : $("#name").val(),
+	email     : $("#email").val(),
+	password  : $("#password").val(), 
+	wantedDate: $("#wantedDate").val(), 
+    }).done(
+	function (data){
+	    alert(JSON.stringify(data));
+	}
+    ).fail(
+	function(){
+	    alert("failed makeResa");
+	}
+    );
 }

@@ -86,3 +86,23 @@
     border: 1px solid #8b1a1a !important;
 }
 
+#debug {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: lightyellow;
+    z-index: 10;
+}
+
+.timeslot{
+    font-size: 70%;
+    display: inline-block;
+    border: orange solid 1px;
+    border-radius: 4px;
+    margin: 3px;
+    background: yellow;
+}
+
+.timeslot input[type=checkbox]{
+    outline: 1px solid green;
+}

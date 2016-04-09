@@ -3,4 +3,11 @@
 __pycache__
 jquery*
 *.log
+*.sq*3
+RTCMultiConnection.js
+firebase.js
+getMouet22.html
+style.css
+video-broadcasting.html
+
 

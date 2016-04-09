@@ -4,8 +4,13 @@ import cherrypy
 from jinja2 import Environment, FileSystemLoader
 import os.path
 from utils import Button
+import db
 
 env = Environment(loader=FileSystemLoader('templates'))
+# launch the database connection
+database = db.resaDB("db.sq3")
+
+
 
 def timeslots (minutes=15):
     """
@@ -85,10 +90,12 @@ class Root:
         @param **k a dictionary with keys name, email, password, wantedDate
         and some more data about checked boxes to ask for reservations
         """
-        cherrypy.session["name"]=kw.get("name","")
-        cherrypy.session["email"]=kw.get("email","")
-        cherrypy.session["password"]=kw.get("password","")
-        cherrypy.session["date"]=kw.get("wantedDate","")
+        name=cherrypy.session["name"]=kw.get("name","")
+        email=cherrypy.session["email"]=kw.get("email","")
+        password=cherrypy.session["password"]=kw.get("password","")
+        date=cherrypy.session["date"]=kw.get("wantedDate","")
+        if len(name) and len(password) and len(email):
+            database.insUser(name,password,email)
         return kw # to be changed!
     
     @cherrypy.expose
@@ -133,5 +140,6 @@ if __name__ == '__main__':
             'tools.staticdir.content_types': {'js': 'text/javascript',}
         },
     }
+    # launch cherrypy
     cherrypy.quickstart(Root(), '/', config=conf)
    

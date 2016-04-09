@@ -3,18 +3,12 @@ Database management
 """
 
 import sqlite3
+import datetime, time, pytz, crypt
 
-"""
-tables for a reservation database.
-Every user can make a reservation for the same resource, resources
-must not overlap each over along time.
-"""
+def adapt_datetime(ts):
+    return time.mktime(ts.timetuple())
 
-resaTables={
-    "user": [("id","k"),("name","t"),("passwd","t"),("email","t"),],
-    "resa": [("id","k"),("beg","i"),("end","i"),],
-    "user_resa": [("id","k"),("user_id","i"),("resa_id","i"),],
-}
+sqlite3.register_adapter(datetime.datetime, adapt_datetime)
 
 class DB(object):
   "Create a SQLite datbase and manage it"
@@ -87,6 +81,71 @@ class DB(object):
           except:
               pass		   # The table probably exists already
 
+class resaDB (DB):
+    """
+    database to deal with reservations of timeslots
+    ======================================================
+    @var resaTables define tables for a reservation database.
+    Every user can make a reservation for the same resource, resources
+    must not overlap each over along time.
+    """
+
+    resaTables={
+      "user": [("id","k"),("name","t"),("passwd","t"),("email","t"),],
+      "resa": [("id","k"),("beg","i"),("end","i"),],
+      "user_resa": [("id","k"),("user_id","i"),("resa_id","i"),],
+    }
+
+    def __init__(self, dbName):
+      """
+      Constructor
+      @param dbName filename for the database
+      """
+      DB.__init__(self, dbName, tables=resaDB.resaTables)
+      return
+
+    def resa4day(self, wantedDate):
+      """
+      gets reservations existing for a given date
+      @param wantedDate the date for reservations, as string in
+      format "mm/dd/yyy"
+      @return an iterable with existing reservations, which gives
+      explicitely the time and the username for each one.
+      """
+      m,d,y=wantedDate.split("/")
+      m,d,y = int(m), int(d), int(y)
+      today=time.mktime(datetime.datetime(y,m,d, tzinfo=pytz.utc).timetuple())
+      req="SELECT beg, name FROM user, resa, user_resa WHERE resa.beg >= {today} AND resa.beg < {tomorrow} AND resa.id=user_resa.resa_id AND user.name=user_resa.user_id".format(today=today, tomorrow=today+24*3600)
+      return self.execreq(req)
+    
+    def insUser(self, name, passwd, email, force=False):
+      """
+      insert a user in the database, or raise an error
+      @param name user's name
+      @param passwd user's password
+      @param email user's e-mail
+      @param force will modify the password and/or e-mail forcefully if True
+      """
+      found=False
+      msg=""
+      res=self.execReq("select * from user where name='{}'".format(name))
+      if len(res):
+        found=True
+        msg="user {} already exists".format(name)
+      res=self.execReq("select * from user where email='{}'".format(email))
+      if len(res):
+        found=True
+        msg="the e-mail address {} is already in use".format(name)
+      if force or not found:
+        req="INSERT INTO user VALUES (?,?,?)"
+        c=crypt.crypt(passwd, salt=crypt.mksalt(crypt.METHOD_MD5))
+        print ("GRRRR req=",req, (name, c, email))
+        self.execReq(req, (name, c, email))
+      else:
+        raise Exception('InsertError',msg)
+      
+
+  
 if __name__=="__main__":
-    print(DB("test.sq3",resaTables))
+    print(resaDB("test.sq3"))
     

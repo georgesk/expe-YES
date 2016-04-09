@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from .models import User, Resa
+
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world. You're at the server's index.")
+    context=None
+    return render(request, 'srv/index.html', context)

@@ -1,0 +1,72 @@
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset:utf-8"/>
+    <title>..::| Expe-YES |::..</title>
+    <link rel="stylesheet" href="{% static 'srv/css/yes.css' %}"/>
+    <link rel="stylesheet" href="{% static 'srv/js/jquery-ui/themes/smoothness/jquery.ui.all.css' %}"/>
+    <script type="text/javascript" src="{% static 'srv/js/jquery/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'srv/js/jquery-ui/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'srv/js/yes.js' %}"></script>
+  </head>
+  <body>
+    <div id="debug">{{sessionData}}</div>
+    <div id="pagetitle">Example expe-YES experiment</div>
+    <div id="unrolled"></div>
+    <div id="compressed"></div>
+    <div class="view" id="webrtc">
+      <p class="seeCompressed">Video feedback</p>
+      {{ video }}
+    </div>
+    <script type="text/javascript">
+      function view(url){ var i = $("iframe"); i.attr('src',url); }
+    </script>
+    <div class="view" id="author">Authors' description and legal stuff</div>
+    <div class="view" id="authorcomment">The autors describe the experiment</div>
+    <div class="view" id="comments">Comments posted by visitors</div>
+    <div class="view" id="reservations">
+      <h1>Reservations</h1>
+      <form action="#" method="post" onsubmit="submitResa();return false;">
+	<table>
+	  <tr>
+	    <th>Wanted reservation date</th>
+	    <td> <input class="datepicker" type="text" name="wantedDate" id="wantedDate" onchange="wantedDateChange()" value="{{date}}"/></td>
+	  </tr>
+	  <tr>
+	    <th>Name</th>
+	    <td> <input type="text" id="name" name="name" value="{{name}}"/></td>
+	  </tr>
+	  <tr>
+	    <th>E-mail address</th>
+	    <td> <input type="text" name="email" id="email" value="{{email}}"/></td>
+	  </tr>
+	  <tr>
+	    <th>Password</th>
+	    <td><input type="password" name="password" id="password" value="{{password}}"/></td>
+	  </tr>
+	</table>
+	<h2>timeslots</h2>
+	<div id="resa">
+	  {% for t in timeslots %}
+	  {{t}}
+	  {% endfor %}
+	</div>
+	{{resa}}
+	<fieldset>
+	  <legend>Make the reservation</legend>
+	  <input type="submit" value="OK"/>
+	</fieldset>
+      </form>
+    </div>
+    <div class="view" id="params">
+      <h1>Parameters and action buttons for the experiment</h1>
+      {% for b in buttons %}
+      {{b}}
+      <br/>
+      {% endfor %}
+    </div>
+    <div class="view" id="outputs">Data delivered by the previous runs of the experiment</div>
+    <div id="message">
+    </div>
+  </body>
+</html>

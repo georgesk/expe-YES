@@ -103,14 +103,37 @@ function message(s, option){
 }
 
 /**
+ * disable reservation entries based on the database's contents
+ * @param resa a list of tuples [begin,duration, username]
+ **/
+function updateResa(resa){
+    // reset all timeslots
+    $(".timeslot").css({background: "yellow"})
+    $(".timeslot input").prop('disabled',false);
+    // disable reserved timeslots
+    for (var i=0; i < resa.length; i++){
+	var minute=resa[i][0];
+	var span=$("#resa input:checkbox[name=t"+minute+"]").first().parent();
+	span.css({background: "red"});
+	span.attr("title", resa[i][2]); // reserved by ...
+	span.find("input").prop({
+	    'disabled': true,
+	    'checked' :false,
+	});
+    }
+}
+
+/**
  * callback function when the wanted date changes for reservations
  **/
 function wantedDateChange(){
     window.wantedDate=$("#wantedDate").val();
-    $.get("/reservationsByDate",{wantedDate: window.wantedDate})
+    $.get("/srv/reservationsByDate",{wantedDate: window.wantedDate})
 	.done(
 	    function (data){
 		alert(JSON.stringify(data));
+		var resa=data["resa"];
+		updateResa(resa);
 	    }
 	)
 	.fail(
@@ -121,16 +144,23 @@ function wantedDateChange(){
 }
 
 /**
- * callback function for sublitted reservations
+ * callback function for submitted reservations
  **/
 function submitResa(){
-    $.get("/makeResa",{
+    var timeslots=[];
+    var checked=$("#resa input:checked")
+    for (var i=0; i < checked.length; i++){
+	timeslots.push($(checked[i]).attr("name"))
+    }
+    $.get("/srv/makeResa",{
 	name      : $("#name").val(),
-	email     : $("#email").val(),
 	password  : $("#password").val(), 
-	wantedDate: $("#wantedDate").val(), 
+	wantedDate: $("#wantedDate").val(),
+	timeslots : timeslots.join(","),
     }).done(
 	function (data){
+	    var resa=data["resa"];
+	    updateResa(resa);
 	    alert(JSON.stringify(data));
 	}
     ).fail(

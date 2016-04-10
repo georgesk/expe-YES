@@ -37,21 +37,19 @@
 	    <td> <input type="text" id="name" name="name" value="{{name}}"/></td>
 	  </tr>
 	  <tr>
-	    <th>E-mail address</th>
-	    <td> <input type="text" name="email" id="email" value="{{email}}"/></td>
-	  </tr>
-	  <tr>
 	    <th>Password</th>
 	    <td><input type="password" name="password" id="password" value="{{password}}"/></td>
 	  </tr>
 	</table>
 	<h2>timeslots</h2>
 	<div id="resa">
-	  {% for t in timeslots %}
-	  {{t|safe}}
-	  {% endfor %}
+	  {{timeslots| safeseq|join:" "}}
 	</div>
-	{{resa}}
+	<script type="text/javascript">
+	  $(function(){ // will be called when the document is ready
+	    updateResa({{resa|safe}});
+	  });
+	</script>
 	<fieldset>
 	  <legend>Make the reservation</legend>
 	  <input type="submit" value="OK"/>

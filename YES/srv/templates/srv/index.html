@@ -48,7 +48,7 @@
 	<h2>timeslots</h2>
 	<div id="resa">
 	  {% for t in timeslots %}
-	  {{t}}
+	  {{t|safe}}
 	  {% endfor %}
 	</div>
 	{{resa}}

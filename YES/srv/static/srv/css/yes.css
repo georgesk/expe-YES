@@ -106,3 +106,12 @@
 .timeslot input[type=checkbox]{
     outline: 1px solid green;
 }
+
+#auth {
+    float: right;
+    font-size: 70%;
+    margin: 2px;
+    padding: 2px;
+    background: #ffffcc;
+    border-radius: 3px;
+}

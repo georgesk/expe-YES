@@ -114,8 +114,9 @@ function updateResa(resa){
     for (var i=0; i < resa.length; i++){
 	var minute=resa[i][0];
 	var span=$("#resa input:checkbox[name=t"+minute+"]").first().parent();
+	var txt=span.text();
 	span.css({background: "red"});
-	span.attr("title", resa[i][2]); // reserved by ...
+	span.attr("title", txt + " reserved by " + resa[i][2]);
 	span.find("input").prop({
 	    'disabled': true,
 	    'checked' :false,
@@ -131,7 +132,7 @@ function wantedDateChange(){
     $.get("/srv/reservationsByDate",{wantedDate: window.wantedDate})
 	.done(
 	    function (data){
-		alert(JSON.stringify(data));
+		// alert(JSON.stringify(data));
 		var resa=data["resa"];
 		updateResa(resa);
 	    }
@@ -152,16 +153,20 @@ function submitResa(){
     for (var i=0; i < checked.length; i++){
 	timeslots.push($(checked[i]).attr("name"))
     }
+    var username=$("#username").val();
+    if (username.length==0){
+	alert("You are not logged; reservations are not possible");
+	return;
+    }
     $.get("/srv/makeResa",{
-	name      : $("#name").val(),
-	password  : $("#password").val(), 
+	name      : username,
 	wantedDate: $("#wantedDate").val(),
 	timeslots : timeslots.join(","),
     }).done(
 	function (data){
 	    var resa=data["resa"];
 	    updateResa(resa);
-	    alert(JSON.stringify(data));
+	    // alert(JSON.stringify(data));
 	}
     ).fail(
 	function(){

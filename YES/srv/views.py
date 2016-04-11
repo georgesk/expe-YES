@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth import logout as contribLogout, login as contribLogin
+from django.contrib.auth import authenticate
+from django.conf import settings
+from django.shortcuts import redirect
 from django.http import HttpResponse, JsonResponse
 import datetime, time, pytz
 import json
@@ -53,10 +57,39 @@ def index(request):
     context={
         "timeslots": timeslots(15),
         "resa": json.dumps(resa4date(request.session.get("date",""))),
+        "logoutURL": '%s?next=%s' % (settings.LOGOUT_URL, request.path),
+        "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
         }
     response = render(request,  'srv/index.html', context)
     response['Cache-Control'] = 'no-cache, no-store'
     return response
+
+def logout(request):
+    """
+    implements a logout page for the application "srv"
+    """
+    contribLogout(request)
+    return render(request,"srv/logout.html", {"next": request.GET.get("next","/")})
+
+def login(request):
+    """
+    implements a login page for the application "srv"
+    """
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            contribLogin(request, user)
+            msg="Welcome {}".format(user.username)
+        else:
+            msg="Sorry, the account {} is disabled".format(user.username)
+    else:
+        msg="Sorry, please try to login again, or check your accreditation"
+    return render(request,"srv/login.html", {
+        "next": request.GET.get("next","/"),
+        "msg" : msg,
+    })
 
 def reservationsByDate(request):
     """
@@ -95,17 +128,11 @@ def makeResa(request):
         ok=False
         msg+=_(" undefined name;")
     user=User.objects.filter(username=name)
-    okpass=True
     if not user:
         ok=False
         msg+=_(" non-existing user: {};").format(name)
     else:
         user=user[0]
-        password=request.GET.get('password','')
-        okpass=user.check_password(password)
-    if not okpass:
-        ok=False
-        msg +=_(" password does not match;")
     if ok:
         # create reservations!
         for beg in minutes:
@@ -113,6 +140,6 @@ def makeResa(request):
             t_end=t_beg+datetime.timedelta(seconds=15*60)
             r=Resa(user=user, beg=t_beg, end=t_end)
             r.save()
-        resa=resa4date(date)
+    resa=resa4date(date)
     return JsonResponse({'ok': ok, 'msg': msg, 'minutes': minutes,
                          "name": name, 'resa': resa,})

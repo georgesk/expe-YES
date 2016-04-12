@@ -54,9 +54,11 @@ def timeslots (minutes=15):
     return result
 
 def index(request):
+    date=request.session.get("date","")
     context={
         "timeslots": timeslots(15),
-        "resa": json.dumps(resa4date(request.session.get("date",""))),
+        "date": date,
+        "resa": json.dumps(resa4date(date)),
         "logoutURL": '%s?next=%s' % (settings.LOGOUT_URL, request.path),
         "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
         }

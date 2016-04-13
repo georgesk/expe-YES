@@ -116,7 +116,7 @@ function updateResa(resa){
 	var span=$("#resa input:checkbox[name=t"+minute+"]").first().parent();
 	var txt=span.text();
 	span.css({background: "red"});
-	span.attr("title", txt + " reserved by " + resa[i][2]);
+	span.attr("title", txt + " " + gettext("reserved by") + " " + resa[i][2]);
 	span.find("input").prop({
 	    'disabled': true,
 	    'checked' :false,
@@ -139,7 +139,7 @@ function wantedDateChange(){
 	)
 	.fail(
 	    function(){
-		alert("wantedDate failed");
+		alert(gettext("wantedDate failed"));
 	    }
 	);
 }
@@ -155,7 +155,7 @@ function submitResa(username){
 	timeslots.push($(checked[i]).attr("name"))
     }
     if (username.length==0){
-	alert("You are not logged; reservations are not possible");
+	alert(gettext("You are not logged; reservations are not possible"));
 	return;
     }
     $.get("/srv/makeResa",{
@@ -170,7 +170,7 @@ function submitResa(username){
 	}
     ).fail(
 	function(){
-	    alert("failed makeResa");
+	    alert(gettext("failed makeResa"));
 	}
     );
 }

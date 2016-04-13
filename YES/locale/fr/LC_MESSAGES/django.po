@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: expe-YES 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 13:20+0200\n"
-"PO-Revision-Date: 2016-04-13 13:25+0200\n"
+"POT-Creation-Date: 2016-04-13 16:05+0200\n"
+"PO-Revision-Date: 2016-04-13 13:29+0200\n"
 "Last-Translator: FULL NAME <georgesk@debian.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,104 +17,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: srv/templates/srv/index.html:15
+#: srv/templates/srv/index.html:16
 msgid "Example expe-YES experiment"
 msgstr "Expérience « exemple » pour expe-YES"
 
-#: srv/templates/srv/index.html:19
-msgid "Welcome"
-msgstr "Bienvenue {}"
-
 #: srv/templates/srv/index.html:20
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: srv/templates/srv/index.html:21
 msgid "logout"
 msgstr "Se déloger"
 
-#: srv/templates/srv/index.html:27
+#: srv/templates/srv/index.html:28
 msgid "login name"
 msgstr "Nom de login"
 
-#: srv/templates/srv/index.html:28
+#: srv/templates/srv/index.html:29
 msgid "password"
 msgstr "mot de passe"
 
-#: srv/templates/srv/index.html:29
+#: srv/templates/srv/index.html:30
 msgid "Login"
 msgstr "Login"
 
-#: srv/templates/srv/index.html:38
+#: srv/templates/srv/index.html:39
 msgid "Video feedback"
 msgstr "Retour vidéo"
 
-#: srv/templates/srv/index.html:44
+#: srv/templates/srv/index.html:45
 msgid "Authors' description and legal stuff"
 msgstr "Description des auteurs et mentions légales"
 
-#: srv/templates/srv/index.html:45
+#: srv/templates/srv/index.html:46
 msgid "The authors describe the experiment"
 msgstr "Les auteurs décrivent l'expérience"
 
-#: srv/templates/srv/index.html:46
+#: srv/templates/srv/index.html:47
 msgid "Comments posted by visitors"
 msgstr "Commentaires postés par les visiteurs"
 
-#: srv/templates/srv/index.html:48
+#: srv/templates/srv/index.html:49
 msgid "Reservations"
 msgstr "Réservations"
 
-#: srv/templates/srv/index.html:51
+#: srv/templates/srv/index.html:52
 msgid "Wanted reservation date:"
 msgstr "Date souhaitée pour la réservation :"
 
-#: srv/templates/srv/index.html:54
+#: srv/templates/srv/index.html:55
 msgid "timezone ="
 msgstr "Fuseau horaire ="
 
-#: srv/templates/srv/index.html:58
+#: srv/templates/srv/index.html:59
 msgid "timeslots"
 msgstr "créneaux"
 
-#: srv/templates/srv/index.html:68
+#: srv/templates/srv/index.html:69
 msgid "Make the reservation"
 msgstr "Réserver"
 
-#: srv/templates/srv/index.html:69
+#: srv/templates/srv/index.html:70
 msgid "OK"
 msgstr "OK"
 
-#: srv/templates/srv/index.html:73
+#: srv/templates/srv/index.html:74
 msgid "Parameters and action buttons for the experiment"
 msgstr "Paramètres et boutons d'action pour l'expérience"
 
-#: srv/templates/srv/index.html:79
+#: srv/templates/srv/index.html:80
 msgid "Data delivered by the previous runs of the experiment"
 msgstr "Données issues de lancements précédents de l'expérience"
 
-#: srv/templates/srv/login.html:16 srv/templates/srv/logout.html.py:16
+#: srv/templates/srv/login.html:17 srv/templates/srv/logout.html.py:17
 msgid "Thank you for using the site. You shall be redirected in"
 msgstr "Merci d'utiliser ce site. Vous allez être redirigé dans"
 
-#: srv/templates/srv/login.html:16 srv/templates/srv/logout.html.py:16
+#: srv/templates/srv/login.html:17 srv/templates/srv/logout.html.py:17
 msgid "seconds"
 msgstr "secondes"
 
-#: srv/views.py:99
+#: srv/views.py:95
 msgid "Welcome {}"
 msgstr "Bienvenue {}"
 
-#: srv/views.py:101
+#: srv/views.py:97
 msgid "Sorry, the account {} is disabled"
 msgstr "Désolé, le compte {} est désactivé"
 
-#: srv/views.py:103
+#: srv/views.py:99
 msgid "Sorry, please try to login again, or check your accreditation"
 msgstr ""
 "Désolé, essayez de vous loger à nouveau, ou vérifiez votre accréditation"
 
-#: srv/views.py:146
+#: srv/views.py:142
 msgid " undefined date;"
 msgstr " date non définie ;"
 
-#: srv/views.py:150
+#: srv/views.py:146
 msgid " user is not authenticated;"
 msgstr " l'utilisateur n'est pas authentifié ;"
 

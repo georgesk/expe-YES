@@ -9,19 +9,8 @@ import json
 
 from .models import Resa
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as TR
+from django.utils.translation import ugettext as _
 from django.utils import translation
-user_language = 'fr'
-translation.activate(user_language)
-
-def _(s):
-    """
-    calls ugettext with adebug possibility
-    """
-    result=TR(s)
-    print("GRRR calling ugettext with '{}' ==> '{}'".format(s, result), settings.LOCALE_PATHS)
-    return result
-
 
 def resa4date(date,user=None):
     """
@@ -66,6 +55,13 @@ def timeslots (minutes=15):
     return result
 
 def index(request):
+    user_language = 'en'
+    try:
+        user_language = request.user.profile.language
+    except:
+        pass
+    translation.activate(user_language)
+    
     request.session[translation.LANGUAGE_SESSION_KEY] = user_language
     date=request.session.get("date","")
     context={

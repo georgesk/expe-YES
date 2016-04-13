@@ -36,6 +36,7 @@
     <div id="unrolled"></div>
     <div id="compressed"></div>
     <div class="view" id="webrtc">
+      <h1>Webcam</h1>
       <p class="seeCompressed">{% trans "Video feedback" %}</p>
       {{ video }}
     </div>
@@ -62,13 +63,9 @@
       </div>
       <script type="text/javascript">
 	$(function(){ // will be called when the document is ready
-	updateResa({{resa|safe}});
+	updateResa({{resa|safe}}, '{{user.username}}');
 	});
       </script>
-      <fieldset>
-	<legend>{% trans "Make the reservation" %}</legend>
-	<button onClick="submitResa('{{user.username}}');">{% trans "OK" %}</button>
-      </fieldset>
     </div>
     <div class="view" id="params">
       <h1>{% trans "Parameters and action buttons for the experiment" %}</h1>

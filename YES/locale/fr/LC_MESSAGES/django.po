@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: expe-YES 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 16:05+0200\n"
-"PO-Revision-Date: 2016-04-13 13:29+0200\n"
+"POT-Creation-Date: 2016-04-13 19:04+0200\n"
+"PO-Revision-Date: 2016-04-13 19:05+0200\n"
 "Last-Translator: FULL NAME <georgesk@debian.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -97,6 +97,10 @@ msgstr "Merci d'utiliser ce site. Vous allez être redirigé dans"
 msgid "seconds"
 msgstr "secondes"
 
+#: srv/views.py:49
+msgid "... free"
+msgstr "... libre"
+
 #: srv/views.py:95
 msgid "Welcome {}"
 msgstr "Bienvenue {}"
@@ -110,13 +114,21 @@ msgid "Sorry, please try to login again, or check your accreditation"
 msgstr ""
 "Désolé, essayez de vous loger à nouveau, ou vérifiez votre accréditation"
 
-#: srv/views.py:142
+#: srv/views.py:142 srv/views.py:185
 msgid " undefined date;"
 msgstr " date non définie ;"
 
-#: srv/views.py:146
+#: srv/views.py:146 srv/views.py:189
 msgid " user is not authenticated;"
 msgstr " l'utilisateur n'est pas authentifié ;"
+
+#: srv/views.py:178
+msgid " missing time information;"
+msgstr " information d'heure manquante ;"
+
+#: srv/views.py:193
+msgid " error about checked box;"
+msgstr " erreur avec lechamp àcocher ;"
 
 #~ msgid "srv/index.html"
 #~ msgstr "srv/index-fr.html"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: expe-yes 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 16:06+0200\n"
-"PO-Revision-Date: 2016-04-13 16:10+0200\n"
+"POT-Creation-Date: 2016-04-13 19:04+0200\n"
+"PO-Revision-Date: 2016-04-13 19:06+0200\n"
 "Last-Translator: Georges Khaznadar <georgesk@debian.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,18 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: srv/static/srv/js/yes.js:119
+#: srv/static/srv/js/yes.js:121
+msgid "... free"
+msgstr "... libre"
+
+#: srv/static/srv/js/yes.js:128
 msgid "reserved by"
 msgstr "Réservé par"
 
-#: srv/static/srv/js/yes.js:142
+#: srv/static/srv/js/yes.js:162
 msgid "wantedDate failed"
 msgstr "échec de wantedDate"
 
-#: srv/static/srv/js/yes.js:158
+#: srv/static/srv/js/yes.js:178 srv/static/srv/js/yes.js:206
 msgid "You are not logged; reservations are not possible"
 msgstr "Vous n'êtes pas logé ; les réservations ne sont pas possibles"
 
-#: srv/static/srv/js/yes.js:173
+#: srv/static/srv/js/yes.js:194 srv/static/srv/js/yes.js:223
 msgid "failed makeResa"
 msgstr "échec de makeResa"

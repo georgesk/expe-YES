@@ -105,22 +105,41 @@ function message(s, option){
 /**
  * disable reservation entries based on the database's contents
  * @param resa a list of tuples [begin,duration, username]
+ * @param user the login name of the currently logged user
  **/
-function updateResa(resa){
+function updateResa(resa, user){
     // reset all timeslots
-    $(".timeslot").css({background: "yellow"})
-    $(".timeslot input").prop('disabled',false);
-    // disable reserved timeslots
+    var timeslots=$(".timeslot");
+    timeslots.css({background: "yellow"})
+    timeslots.find("input").prop({
+	'disabled': false,
+	'checked' :false,
+    });
+    for (var i=0; i < timeslots.length; i++){
+	var span=$(timeslots[i]);
+	var txt=span.text();
+	span.attr('title', txt+gettext("... free"));
+    }
+    // manage reserved timeslots
     for (var i=0; i < resa.length; i++){
 	var minute=resa[i][0];
 	var span=$("#resa input:checkbox[name=t"+minute+"]").first().parent();
 	var txt=span.text();
-	span.css({background: "red"});
 	span.attr("title", txt + " " + gettext("reserved by") + " " + resa[i][2]);
-	span.find("input").prop({
-	    'disabled': true,
-	    'checked' :false,
-	});
+	if (user==resa[i][2]){
+	    // same user; the reservation can be undone
+	    span.css({background: "lightgreen"});
+	    span.find("input").prop({
+		'checked' : true,
+	    });
+	} else {
+	    // different user, the reservation cannot be undone
+	    span.css({background: "red"});
+	    span.find("input").prop({
+		'disabled': true,
+		'checked' : true,
+	    });
+	}
     }
 }
 
@@ -134,7 +153,8 @@ function wantedDateChange(){
 	    function (data){
 		// alert(JSON.stringify(data));
 		var resa=data["resa"];
-		updateResa(resa);
+		var user=data["name"];
+		updateResa(resa, user);
 	    }
 	)
 	.fail(
@@ -165,7 +185,37 @@ function submitResa(username){
     }).done(
 	function (data){
 	    var resa=data["resa"];
-	    updateResa(resa);
+	    var user=data["name"];
+	    updateResa(resa, user);
+	    // alert(JSON.stringify(data));
+	}
+    ).fail(
+	function(){
+	    alert(gettext("failed makeResa"));
+	}
+    );
+}
+
+/**
+ * callback function for toggling a reservation
+ * @param username login name for the user which makes the reservation
+ * @param checkbox the input[type=checkbox] element which calls back
+ **/
+function toggleResa(username, checkbox){
+    if (username.length==0){
+	alert(gettext("You are not logged; reservations are not possible"));
+	return;
+    }
+    $.get("/srv/toggleResa",{
+	name      : username,
+	wantedDate: $("#wantedDate").val(),
+	minute: $(checkbox).attr("name"),
+	checked: $(checkbox).prop("checked"),
+    }).done(
+	function (data){
+	    var resa=data["resa"];
+	    var user=data["name"];
+	    updateResa(resa, user);
 	    // alert(JSON.stringify(data));
 	}
     ).fail(

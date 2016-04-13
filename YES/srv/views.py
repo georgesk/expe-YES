@@ -46,7 +46,7 @@ def timeslots (minutes=15):
     h=0
     m=0
     while t < 24*60:
-        result.append("<span class='timeslot' title='{h:02d}:{m:02d}... free'>{h:02d}:{m:02d}<input name='t{t:d}' type='checkbox'/></span>".format(m=m, h=h, t=t))
+        result.append("<span class='timeslot' title='{h:02d}:{m:02d}{status}'/>{h:02d}:{m:02d}<input name='t{t:d}' type='checkbox' onChange='toggleResa(\"{{user.username}}\",this);'/></span>".format(m=m, h=h, t=t, status=_("... free")))
         t+=minutes
         m+=minutes
         if m >= 60:
@@ -110,7 +110,7 @@ def reservationsByDate(request):
     """
     date=request.GET.get('wantedDate','')
     request.session["date"]=date
-    return JsonResponse({'resa': resa4date(date, request.user), 'date': date})
+    return JsonResponse({'resa': resa4date(date, request.user), 'date': date, 'name': request.user.username,})
 
 def makeResa(request):
     """
@@ -149,8 +149,65 @@ def makeResa(request):
         for beg in minutes:
             t_beg=today+datetime.timedelta(seconds=beg*60)
             t_end=t_beg+datetime.timedelta(seconds=15*60)
-            r=Resa(user=user, beg=t_beg, end=t_end)
-            r.save()
+            if not Resa.objects.filter(beg=t_beg):
+                ## do not overwrite previous reservations !
+                r=Resa(user=user, beg=t_beg, end=t_end)
+                r.save()
     resa=resa4date(date, request.user)
     return JsonResponse({'ok': ok, 'msg': msg, 'minutes': minutes,
-                         "name": name, 'resa': resa,})
+                         "name": user.username, 'resa': resa,})
+
+def toggleResa(request):
+    """
+    toggles a reservation when possible
+    @param request provides GET parameters like wantedDate, name, etc.
+    @return a report after inserting data into the database or deleting some,
+    in JSON string format    
+    """
+    msg=""
+    ok=True
+    date=request.GET.get('wantedDate','')
+    user=request.user
+    try:
+        tz=pytz.timezone(user.profile.timezone)
+    except:
+        tz=pytz.utc
+    minute=request.GET.get("minute","")
+    if minute:
+        minute=int(minute[1:]) # get rid of leading 't'
+    else:
+        ok=False
+        msg += _(" missing time information;")
+    if date:
+        request.session["date"]=date
+        m,d,y = date.split("/")
+        today=tz.localize(datetime.datetime(int(y), int(m), int(d)))
+    else:
+        ok=False
+        msg+=_(" undefined date;")
+    name=request.GET.get('name','')
+    if not user or not user.is_authenticated():
+        ok=False
+        msg+=_(" user is not authenticated;")
+    checked=request.GET.get("checked","")
+    if len(checked)==0:
+        ok=False
+        msg += _(" error about checked box;")
+    else:
+        checked=(checked=="true")
+    if ok:
+        # create or delete reservation!
+        t_beg=today+datetime.timedelta(seconds=minute*60)
+        t_end=t_beg+datetime.timedelta(seconds=15*60)
+        if checked:
+            # create the resa
+            if not Resa.objects.filter(beg=t_beg):
+                ## do not overwrite previous reservations !
+                r=Resa(user=user, beg=t_beg, end=t_end)
+                r.save()
+        else:
+            # delete the resa
+            Resa.objects.filter(beg=t_beg).delete()
+    resa=resa4date(date, request.user)
+    return JsonResponse({'ok': ok, 'msg': msg, 'minute': minute,
+                         "name": user.username, 'resa': resa,})

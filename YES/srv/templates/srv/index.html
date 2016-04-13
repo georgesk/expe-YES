@@ -53,7 +53,7 @@
 	  <th>{% trans "Wanted reservation date:" %}</th>
 	  <td>
 	    <input class="datepicker" type="text" name="wantedDate" id="wantedDate" onchange="wantedDateChange()" value="{{date}}"/>
-	    <span id="tz">{% trans "timezone =" %} {{user.profile.timezone}}</span>
+	    <span id="tz">{% trans "timezone =" %} {% firstof user.profile.timezone "UTC" %}</span>
 	  </td>
 	</tr>
       </table>
@@ -70,7 +70,7 @@
     <div class="view" id="params">
       <h1>{% trans "Parameters and action buttons for the experiment" %}</h1>
       {% for b in buttons %}
-      {{b}}
+      {{b|safe}}
       <br/>
       {% endfor %}
     </div>

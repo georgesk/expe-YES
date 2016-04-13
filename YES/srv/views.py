@@ -11,6 +11,7 @@ from .models import Resa
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils import translation
+from .utils import Button
 
 def resa4date(date,user=None):
     """
@@ -64,17 +65,31 @@ def index(request):
     
     request.session[translation.LANGUAGE_SESSION_KEY] = user_language
     date=request.session.get("date","")
+    # contents for the action tab
+    actionButtons=[
+        Button(name = "Un",   html =  "2+2", action = "/srv/action/1"),
+        Button(name = "Deux", html =  "3+3", action = "/srv/action/2"),
+        Button(name = "Tris", html =  "4+4", action = "/srv/action/3"),
+    ]
     context={
         "timeslots": timeslots(15),
         "date": date,
         "resa": json.dumps(resa4date(date, request.user)),
         "logoutURL": '%s?next=%s' % (settings.LOGOUT_URL, request.path),
         "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
+        "buttons": actionButtons,
         }
     response = render(request,  'srv/index.html', context)
     response['Cache-Control'] = 'no-cache, no-store'
     return response
 
+def action (request, p):
+    """
+    service called by action buttons
+    @param p given by the urls
+    """
+    return JsonResponse({"debug p": p})
+    
 def logout(request):
     """
     implements a logout page for the application "srv"

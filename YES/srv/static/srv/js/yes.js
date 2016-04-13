@@ -9,7 +9,6 @@ function unrollFunction(v){
 	var unrolled=$("#unrolled div").first();
 	$("#compressed").prepend(unrolled);
 	// hide parts which are only for compressed displays
-	v.find(".seeCompressed").hide()
 	$("#unrolled").append(v);
 	initCompressed();
 	var i = v.find("iframe").first();
@@ -36,8 +35,6 @@ function initCompressed(){
     compressed.sortable();
     compressed.disableSelection();
     var views = compressed.find("div");
-    // show parts which are only for compressed displays
-    views.find(".seeCompressed").hide()
     for (var i=0;i < views.length; i++){
 	var v = $(views[i]);
 	removeUnrollStuff(v); //don't keep old buttons

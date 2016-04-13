@@ -35,6 +35,18 @@
     overflow: auto;
 }
 
+#compressed .seeCompressed{
+    visibility: visible;
+}
+
+#compressed h1,h2,h3 {
+    font-size: 100%;
+}
+
+#unrolled .seeCompressed{
+    visibility: hidden;
+}
+
 #compressed div {
     margin: 10px;
     border: 1px solid #888888;

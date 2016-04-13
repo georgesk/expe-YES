@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load staticfiles %}
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -11,21 +12,21 @@
   </head>
   <body>
     <div id="pagetitle">
-      Example expe-YES experiment
+      {% trans "Example expe-YES experiment" %}
       <div id="auth">
 	{% if user.username %}
 	<div id="welcome">
-	  Welcome {{user.username}}<br/>
-	  <a href="{{logoutURL}}">logout</a>
+	  {% trans "Welcome" %} {{user.username}}<br/>
+	  <a href="{{logoutURL}}">{% trans "logout" %}</a>
 	</div>
 	{% else %}
 	<div id="login">
 	  <form action="{{loginURL}}" method="post">
 	    {% csrf_token %}
 	    <input name="return" value="index" type="hidden"/>
-	    <input name="username" placeholder="login name" type="text"/>
-	    <input name="password" placeholder="password" type="password"/>
-	    <input type="submit" value="Login"/>
+	    <input name="username" placeholder='{% trans "login name" %}' type="text"/>
+	    <input name="password" placeholder='{% trans "password" %}' type="password"/>
+	    <input type="submit" value='{% trans "Login"%}'/>
 	  </form>
 	</div>
 	{% endif %}
@@ -34,27 +35,27 @@
     <div id="unrolled"></div>
     <div id="compressed"></div>
     <div class="view" id="webrtc">
-      <p class="seeCompressed">Video feedback</p>
+      <p class="seeCompressed">{% trans "Video feedback" %}</p>
       {{ video }}
     </div>
     <script type="text/javascript">
       function view(url){ var i = $("iframe"); i.attr('src',url); }
     </script>
-    <div class="view" id="author">Authors' description and legal stuff</div>
-    <div class="view" id="authorcomment">The autors describe the experiment</div>
-    <div class="view" id="comments">Comments posted by visitors</div>
+    <div class="view" id="author">{% trans "Authors' description and legal stuff" %}</div>
+    <div class="view" id="authorcomment">{% trans "The authors describe the experiment" %}</div>
+    <div class="view" id="comments">{% trans "Comments posted by visitors" %}</div>
     <div class="view" id="reservations">
-      <h1>Reservations</h1>
+      <h1>{% trans "Reservations" %}</h1>
       <table>
 	<tr>
-	  <th>Wanted reservation date:</th>
+	  <th>{% trans "Wanted reservation date:" %}</th>
 	  <td>
 	    <input class="datepicker" type="text" name="wantedDate" id="wantedDate" onchange="wantedDateChange()" value="{{date}}"/>
-	    <span id="tz">timezone = {{user.profile.timezone}}</span>
+	    <span id="tz">{% trans "timezone =" %} {{user.profile.timezone}}</span>
 	  </td>
 	</tr>
       </table>
-      <h2>timeslots</h2>
+      <h2>{% trans "timeslots" %}</h2>
       <div id="resa">
 	{{timeslots| safeseq|join:" "}}
       </div>
@@ -64,18 +65,18 @@
 	});
       </script>
       <fieldset>
-	<legend>Make the reservation</legend>
-	<button onClick="submitResa('{{user.username}}');">OK</button>
+	<legend>{% trans "Make the reservation" %}</legend>
+	<button onClick="submitResa('{{user.username}}');">{% trans "OK" %}</button>
       </fieldset>
     </div>
     <div class="view" id="params">
-      <h1>Parameters and action buttons for the experiment</h1>
+      <h1>{% trans "Parameters and action buttons for the experiment" %}</h1>
       {% for b in buttons %}
       {{b}}
       <br/>
       {% endfor %}
     </div>
-    <div class="view" id="outputs">Data delivered by the previous runs of the experiment</div>
+    <div class="view" id="outputs">{% trans "Data delivered by the previous runs of the experiment" %}</div>
     <div id="message">
     </div>
   </body>

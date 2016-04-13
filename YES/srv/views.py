@@ -9,12 +9,19 @@ import json
 
 from .models import Resa
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as TR
+from django.utils import translation
+user_language = 'fr'
+translation.activate(user_language)
 
 def _(s):
     """
-    translate function; defaults to identity
+    calls ugettext with adebug possibility
     """
-    return s
+    result=TR(s)
+    print("GRRR calling ugettext with '{}' ==> '{}'".format(s, result), settings.LOCALE_PATHS)
+    return result
+
 
 def resa4date(date,user=None):
     """
@@ -24,9 +31,9 @@ def resa4date(date,user=None):
     @return a list of reservations as tuples: (begin, duration, username)
     begin and duration are in minutes
     """
-    if user:
+    try:
         tz=pytz.timezone(user.profile.timezone)
-    else:
+    except:
         tz=pytz.utc
     result=[]
     if date:
@@ -59,6 +66,7 @@ def timeslots (minutes=15):
     return result
 
 def index(request):
+    request.session[translation.LANGUAGE_SESSION_KEY] = user_language
     date=request.session.get("date","")
     context={
         "timeslots": timeslots(15),
@@ -88,11 +96,11 @@ def login(request):
     if user is not None:
         if user.is_active:
             contribLogin(request, user)
-            msg="Welcome {}".format(user.username)
+            msg=_("Welcome {}").format(user.username)
         else:
-            msg="Sorry, the account {} is disabled".format(user.username)
+            msg=_("Sorry, the account {} is disabled").format(user.username)
     else:
-        msg="Sorry, please try to login again, or check your accreditation"
+        msg=_("Sorry, please try to login again, or check your accreditation")
     return render(request,"srv/login.html", {
         "next": request.GET.get("next","/"),
         "msg" : msg,
@@ -120,9 +128,9 @@ def makeResa(request):
     ok=True
     date=request.GET.get('wantedDate','')
     user=request.user
-    if user and user.is_authenticated():
+    try:
         tz=pytz.timezone(user.profile.timezone)
-    else:
+    except:
         tz=pytz.utc
     minutes=[]
     if date:

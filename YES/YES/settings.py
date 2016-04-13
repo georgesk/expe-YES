@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
+import os, os.path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,9 +49,27 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'YES.urls'
+
+LOCALE_PATHS = (
+    os.path.abspath(
+        os.path.join(
+            BASE_DIR, 
+            "locale")),
+)
+
+LANGUAGES = (
+    ('en-us', 'English'),
+    ('fr_FR', 'French'),
+    ('fr', 'French'),
+)
+
+
+LANGUAGE_CODE = 'en-us' 'fr' 'fr_FR'
+
 
 TEMPLATES = [
     {

@@ -146,14 +146,14 @@ function wantedDateChange(){
 
 /**
  * callback function for submitted reservations
+ * @param username login name for the user which makes the reservation
  **/
-function submitResa(){
+function submitResa(username){
     var timeslots=[];
     var checked=$("#resa input:checked")
     for (var i=0; i < checked.length; i++){
 	timeslots.push($(checked[i]).attr("name"))
     }
-    var username=$("#username").val();
     if (username.length==0){
 	alert("You are not logged; reservations are not possible");
 	return;

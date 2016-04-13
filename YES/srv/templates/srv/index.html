@@ -45,28 +45,28 @@
     <div class="view" id="comments">Comments posted by visitors</div>
     <div class="view" id="reservations">
       <h1>Reservations</h1>
-      <form action="#" method="post" onsubmit="submitResa();return false;">
-	<table>
-	  <tr>
-	    <th>Wanted reservation date</th>
-	    <td> <input class="datepicker" type="text" name="wantedDate" id="wantedDate" onchange="wantedDateChange()" value="{{date}}"/></td>
-	  </tr>
-	</table>
-	<h2>timeslots</h2>
-	<div id="resa">
-	  {{timeslots| safeseq|join:" "}}
-	</div>
-	<script type="text/javascript">
-	  $(function(){ // will be called when the document is ready
-	    updateResa({{resa|safe}});
-	  });
-	</script>
-	<fieldset>
-	  <legend>Make the reservation</legend>
-	  <input type="hidden" id="username" value="{{user.username}}"/>
-	  <input type="submit" value="OK"/>
-	</fieldset>
-      </form>
+      <table>
+	<tr>
+	  <th>Wanted reservation date:</th>
+	  <td>
+	    <input class="datepicker" type="text" name="wantedDate" id="wantedDate" onchange="wantedDateChange()" value="{{date}}"/>
+	    <span id="tz">timezone = {{user.profile.timezone}}</span>
+	  </td>
+	</tr>
+      </table>
+      <h2>timeslots</h2>
+      <div id="resa">
+	{{timeslots| safeseq|join:" "}}
+      </div>
+      <script type="text/javascript">
+	$(function(){ // will be called when the document is ready
+	updateResa({{resa|safe}});
+	});
+      </script>
+      <fieldset>
+	<legend>Make the reservation</legend>
+	<button onClick="submitResa('{{user.username}}');">OK</button>
+      </fieldset>
     </div>
     <div class="view" id="params">
       <h1>Parameters and action buttons for the experiment</h1>

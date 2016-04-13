@@ -16,17 +16,22 @@ def _(s):
     """
     return s
 
-def resa4date(date):
+def resa4date(date,user=None):
     """
     gets reservations for a given date
     @param date the date to query
+    @param user the user which is logged: useful to get the timezone
     @return a list of reservations as tuples: (begin, duration, username)
     begin and duration are in minutes
     """
+    if user:
+        tz=pytz.timezone(user.profile.timezone)
+    else:
+        tz=pytz.utc
     result=[]
     if date:
         m,d,y = date.split("/")
-        today=datetime.datetime(int(y), int(m), int(d), tzinfo=pytz.utc)
+        today=tz.localize(datetime.datetime(int(y), int(m), int(d)))
         tomorrow=today+datetime.timedelta(days=1)
         resa=Resa.objects.filter(beg__gte=today).filter(beg__lt=tomorrow)
         for r in resa:
@@ -58,7 +63,7 @@ def index(request):
     context={
         "timeslots": timeslots(15),
         "date": date,
-        "resa": json.dumps(resa4date(date)),
+        "resa": json.dumps(resa4date(date, request.user)),
         "logoutURL": '%s?next=%s' % (settings.LOGOUT_URL, request.path),
         "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
         }
@@ -101,7 +106,7 @@ def reservationsByDate(request):
     """
     date=request.GET.get('wantedDate','')
     request.session["date"]=date
-    return JsonResponse({'resa': resa4date(date), 'date': date})
+    return JsonResponse({'resa': resa4date(date, request.user), 'date': date})
 
 def makeResa(request):
     """
@@ -111,30 +116,30 @@ def makeResa(request):
     @return a report after inserting data into the database,
     in JSON string format    
     """
-    ok=True
     msg=""
+    ok=True
     date=request.GET.get('wantedDate','')
+    user=request.user
+    if user and user.is_authenticated():
+        tz=pytz.timezone(user.profile.timezone)
+    else:
+        tz=pytz.utc
     minutes=[]
     if date:
         request.session["date"]=date
         m,d,y = date.split("/")
-        today=datetime.datetime(int(y), int(m), int(d), tzinfo=pytz.utc)
-        minutes=[int(ts[1:]) for ts in request.GET.get("timeslots").split(",")]
+        today=tz.localize(datetime.datetime(int(y), int(m), int(d)))
+        timeslots=request.GET.get("timeslots")
+        minutes=[]
+        if (len(timeslots)):
+            minutes=[int(ts[1:]) for ts in timeslots.split(",")]
     else:
         ok=False
         msg+=_(" undefined date;")
     name=request.GET.get('name','')
-    if name:
-        request.session["name"]=name
-    else:
+    if not user or not user.is_authenticated():
         ok=False
-        msg+=_(" undefined name;")
-    user=User.objects.filter(username=name)
-    if not user:
-        ok=False
-        msg+=_(" non-existing user: {};").format(name)
-    else:
-        user=user[0]
+        msg+=_(" user is not authenticated;")
     if ok:
         # create reservations!
         for beg in minutes:
@@ -142,6 +147,6 @@ def makeResa(request):
             t_end=t_beg+datetime.timedelta(seconds=15*60)
             r=Resa(user=user, beg=t_beg, end=t_end)
             r.save()
-    resa=resa4date(date)
+    resa=resa4date(date, request.user)
     return JsonResponse({'ok': ok, 'msg': msg, 'minutes': minutes,
                          "name": name, 'resa': resa,})

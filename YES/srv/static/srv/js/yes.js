@@ -236,7 +236,12 @@ function elParams(name){
 	var value=element.attributes[i].value;
 	if (name.substring(0,2) != "on"){
 	    // do not take in account onchange or onclick attributes!
-	    result.push(name+"="+element.attributes[i].value);
+	    if (name=="value"){
+		// do not access to the default value but to the current one
+		result.push("value="+element.value);
+	    } else {
+		result.push(name+"="+element.attributes[i].value);
+	    }
 	}
     }
     return result.join("&");

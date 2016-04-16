@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: expe-YES 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-16 18:51+0200\n"
-"PO-Revision-Date: 2016-04-16 18:51+0200\n"
+"POT-Creation-Date: 2016-04-16 23:33+0200\n"
+"PO-Revision-Date: 2016-04-16 23:34+0200\n"
 "Last-Translator: FULL NAME <georgesk@debian.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -149,14 +149,18 @@ msgid "Parameters and action buttons for the experiment"
 msgstr "Paramètres et boutons d'action pour l'expérience"
 
 #: srv/templates/srv/index.html:90
+msgid "Status of the experiment box"
+msgstr "Statut du boîtier de mesures"
+
+#: srv/templates/srv/index.html:94
 msgid "Action buttons"
 msgstr "Boutons d'action"
 
-#: srv/templates/srv/index.html:95
+#: srv/templates/srv/index.html:99
 msgid "Range controls"
 msgstr "Contrôles analogiques"
 
-#: srv/templates/srv/index.html:101
+#: srv/templates/srv/index.html:105
 msgid "Data delivered by the previous runs of the experiment"
 msgstr "Données issues de lancements précédents de l'expérience"
 
@@ -180,25 +184,27 @@ msgstr "Sans_étiquette"
 msgid "no description"
 msgstr "description manquante"
 
-#: srv/views.py:50
+#: srv/views.py:54
 msgid "... free"
 msgstr "... libre"
 
-#: srv/views.py:71
+#: srv/views.py:77 srv/views.py:82
 msgid "Toggle the LED's light"
 msgstr "Bascule pour l'état de la DEL"
 
-#: srv/views.py:73
-msgid "Lights the LED up or down. It should modify the LDR's resistance."
-msgstr ""
-"Allume ou éteint le DEL. Ça devrait changer la résistance de la "
-"photorésistance."
+#: srv/views.py:79
+msgid "Lights the LED up. It should modify the LDR's resistance."
+msgstr "Allume la DEL. Ça devrait changer la résistance de la photorésistance."
 
-#: srv/views.py:80
+#: srv/views.py:84
+msgid "Lights the LED down. It should modify the LDR's resistance."
+msgstr "Éteint la DEL. Ça devrait changer la résistance de la photorésistance."
+
+#: srv/views.py:91
 msgid "Frequency"
 msgstr "Fréquence"
 
-#: srv/views.py:81
+#: srv/views.py:92
 msgid ""
 "Tune the frequency for the buzzer (500 to 10000 Hz). It should have "
 "consequences on the frequency and the ammplitude of the microphone's signal."
@@ -206,54 +212,55 @@ msgstr ""
 "Réglage de la fréquence du buzzer (ed 500 à 10000 Hz). Ça devrait avoir des "
 "conséquences sur la fréquence et l'amplitude du signal du microphone."
 
-#: srv/views.py:108
-msgid "action call"
-msgstr "action invoquée"
+#: srv/views.py:100
+msgid "ExpEYES-Junior, version "
+msgstr "ExpEYES-Junior, version "
 
-#: srv/views.py:109
-msgid "action state"
-msgstr "état de l'action"
-
-#: srv/views.py:109
-msgid "not yet implemented"
-msgstr "pas encore implémentée"
-
-#: srv/views.py:110
+#: srv/views.py:131
 msgid "GET parameters"
 msgstr "paramètres du GET"
 
-#: srv/views.py:133
+#: srv/views.py:155
 msgid "Logout"
 msgstr "Se déloger"
 
-#: srv/views.py:146
+#: srv/views.py:168
 msgid "Welcome {}"
 msgstr "Bienvenue {}"
 
-#: srv/views.py:148
+#: srv/views.py:170
 msgid "Sorry, the account {} is disabled"
 msgstr "Désolé, le compte {} est désactivé"
 
-#: srv/views.py:150
+#: srv/views.py:172
 msgid "Sorry, please try to login again, or check your accreditation"
 msgstr ""
 "Désolé, essayez de vous loger à nouveau, ou vérifiez votre accréditation"
 
-#: srv/views.py:193 srv/views.py:238
+#: srv/views.py:215 srv/views.py:260
 msgid " undefined date;"
 msgstr " date non définie ;"
 
-#: srv/views.py:197 srv/views.py:242
+#: srv/views.py:219 srv/views.py:264
 msgid " user is not authenticated;"
 msgstr " l'utilisateur n'est pas authentifié ;"
 
-#: srv/views.py:231
+#: srv/views.py:253
 msgid " missing time information;"
 msgstr " information d'heure manquante ;"
 
-#: srv/views.py:246
+#: srv/views.py:268
 msgid " error about checked box;"
 msgstr " erreur avec lechamp àcocher ;"
+
+#~ msgid "action call"
+#~ msgstr "action invoquée"
+
+#~ msgid "action state"
+#~ msgstr "état de l'action"
+
+#~ msgid "not yet implemented"
+#~ msgstr "pas encore implémentée"
 
 #~ msgid "Make the reservation"
 #~ msgstr "Réserver"

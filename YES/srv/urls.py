@@ -1,5 +1,4 @@
 from django.conf.urls import url
-
 from . import views
 
 from django.views.i18n import javascript_catalog
@@ -19,3 +18,4 @@ urlpatterns = [
     url(r'^action/(.*)$',views.action),
     url(r'^add_comment$',views.add_comment, name="add comment"),
 ]
+

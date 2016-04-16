@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.shortcuts import render
 from django.contrib.auth import logout as contribLogout, login as contribLogin
 from django.contrib.auth import authenticate
@@ -12,6 +13,9 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from .utils import Button, Range
+
+import expeyes.eyesj
+EYES=None # this variable should be global in this module
 
 def resa4date(date,user=None):
     """
@@ -62,15 +66,22 @@ def index(request):
     except:
         pass
     translation.activate(user_language)
+    ## initialization of expEYES-Junior
+    settings.EYES = expeyes.eyesj.open()
     
     request.session[translation.LANGUAGE_SESSION_KEY] = user_language
     date=request.session.get("date","")
     # contents for the action tab
     actionButtons=[
-        Button(name = "LED",
+        Button(name = "LEDON",
                label =  _("Toggle the LED's light"),
                action = "/srv/action/toggleLED",
-               description=_("Lights the LED up or down. It should modify the LDR's resistance.")
+               description=_("Lights the LED up. It should modify the LDR's resistance.")
+        ),
+        Button(name = "LEDOFF",
+               label =  _("Toggle the LED's light"),
+               action = "/srv/action/toggleLED",
+               description=_("Lights the LED down. It should modify the LDR's resistance.")
         ),
     ]
     actionRanges=[
@@ -85,6 +96,8 @@ def index(request):
             step="10",
             )
     ]
+
+    eyesV=_("ExpEYES-Junior, version ")+settings.EYES.version.decode("utf-8")
     context={
         "timeslots": timeslots(15),
         "date": date,
@@ -93,7 +106,8 @@ def index(request):
         "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
         "buttons": actionButtons,
         "ranges": actionRanges,
-        "comments": Comment.objects.all()
+        "comments": Comment.objects.all(),
+        "eyes": eyesV,
         }
     response = render(request,  'srv/index.html', context)
     response['Cache-Control'] = 'no-cache, no-store'
@@ -104,10 +118,18 @@ def action (request, p):
     service called by action buttons
     @param p given by the urls
     """
+    OD1=10
+    f=0
+    name=request.GET.get("name","")
+    if name=="LEDON":
+        settings.EYES.set_state(OD1,1)
+    elif name=="LEDOFF":
+        settings.EYES.set_state(OD1,0)
+    elif name=="range1":
+        f=settings.EYES.set_sqr1(int(request.GET.get("value","0")))
     return JsonResponse({
-        _("action call"): p,
-        _("action state"): _("not yet implemented"),
         _("GET parameters"): repr(dict(request.GET)),
+        "f": f,
     })
 
 def add_comment(request):
@@ -262,3 +284,4 @@ def toggleResa(request):
     resa=resa4date(date, request.user)
     return JsonResponse({'ok': ok, 'msg': msg, 'minute': minute,
                          "name": user.username, 'resa': resa,})
+

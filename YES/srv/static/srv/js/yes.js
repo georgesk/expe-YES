@@ -221,3 +221,23 @@ function toggleResa(username, checkbox){
 	}
     );
 }
+
+/**
+ * changes the attributes of an element into a list of parameters for
+ * a HTTP GET query
+ * @param name the name of an element
+ * @ return a string for a GET query
+ **/
+function elParams(name){
+    var element=$("[name='"+name+"']")[0];
+    var result=[];
+    for (var i=0; i < element.attributes.length; i++){
+	var name=element.attributes[i].name;
+	var value=element.attributes[i].value;
+	if (name.substring(0,2) != "on"){
+	    // do not take in account onchange or onclick attributes!
+	    result.push(name+"="+element.attributes[i].value);
+	}
+    }
+    return result.join("&");
+}

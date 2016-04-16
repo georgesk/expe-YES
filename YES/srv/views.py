@@ -104,7 +104,11 @@ def action (request, p):
     service called by action buttons
     @param p given by the urls
     """
-    return JsonResponse({_("action call"): p, _("action state"): _("not yet implemented")})
+    return JsonResponse({
+        _("action call"): p,
+        _("action state"): _("not yet implemented"),
+        _("GET parameters"): repr(dict(request.GET)),
+    })
 
 def add_comment(request):
     """

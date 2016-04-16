@@ -13,7 +13,7 @@ class Element:
         self.name=kw.get("name",_("No_name"))
         self.label=kw.get("label",_("No_label"))
         self.description=kw.get("description",_("no description"))
-        self.action="""$.ajax("{0}").done(function(data){{message("Succès : {0} --> "+JSON.stringify(data, null, 2).replace(/\\n/g,"<br/>").replace(/ /g,"&nbsp;"), document.success)}}).fail(function(data){{message("Échec : {0}",document.failure)}})""".format(kw.get("action","action0"))
+        self.action="""$.ajax("{0}?"+elParams("{1}")).done(function(data){{message("Succès : {0} --> "+JSON.stringify(data, null, 2).replace(/\\n/g,"<br/>").replace(/ /g,"&nbsp;"), document.success)}}).fail(function(data){{message("Échec : {0}",document.failure)}})""".format(kw.get("action","action0"),self.name)
 
 class Button(Element):
     """

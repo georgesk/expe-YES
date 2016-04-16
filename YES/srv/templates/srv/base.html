@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset:utf-8"/>
+    <title>..::| Expe-YES |::..</title>
+    <link rel="stylesheet" href="{% static 'srv/css/yes.css' %}"/>
+    <link rel="stylesheet" href="{% static 'srv/js/jquery-ui/themes/smoothness/jquery.ui.all.css' %}"/>
+    <script type="text/javascript" src="{% static 'srv/js/jquery/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'srv/js/jquery-ui/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    {% block customjs %}{% endblock %}
+    
+  </head>
+  <body>
+    <div id="pagetitle">
+    {% block pagetitle %}
+      {% trans "Example expe-YES experiment" %}
+      <div id="auth">
+	{% if user.username %}
+	<div id="welcome">
+	  {% trans "Welcome" %} {{user.username}}<br/>
+	  <a href="{{logoutURL}}">{% trans "logout" %}</a>
+	</div>
+	{% else %}
+	<div id="login">
+	  <form action="{{loginURL}}" method="post">
+	    {% csrf_token %}
+	    <input name="return" value="index" type="hidden"/>
+	    <input name="username" placeholder='{% trans "login name" %}' type="text"/>
+	    <input name="password" placeholder='{% trans "password" %}' type="password"/>
+	    <input type="submit" value='{% trans "Login"%}'/>
+	  </form>
+	</div>
+	{% endif %}
+      </div>
+      {% endblock %}
+    </div>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^reservationsByDate$', views.reservationsByDate, name='reservationsByDate'),
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
     url(r'^action/(.*)$',views.action),
+    url(r'^add_comment$',views.add_comment, name="add comment"),
 ]

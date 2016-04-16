@@ -7,7 +7,7 @@ from django.http import HttpResponse, JsonResponse
 import datetime, time, pytz
 import json
 
-from .models import Resa
+from .models import Resa, Comment
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils import translation
@@ -78,6 +78,7 @@ def index(request):
         "logoutURL": '%s?next=%s' % (settings.LOGOUT_URL, request.path),
         "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
         "buttons": actionButtons,
+        "comments": Comment.objects.all()
         }
     response = render(request,  'srv/index.html', context)
     response['Cache-Control'] = 'no-cache, no-store'
@@ -89,13 +90,29 @@ def action (request, p):
     @param p given by the urls
     """
     return JsonResponse({"debug p": p})
+
+def add_comment(request):
+    """
+    page featuring a form to add a comment
+    """
+    if request.method == "POST":
+        text=request.POST.get("text","")
+        if text.strip():
+            comment=Comment(text=text, author=request.user)
+            comment.save()
+            return redirect('/srv')
+    else:
+        return render(request, 'srv/comment.html', {})
     
 def logout(request):
     """
     implements a logout page for the application "srv"
     """
     contribLogout(request)
-    return render(request,"srv/logout.html", {"next": request.GET.get("next","/")})
+    return render(request,"srv/logout.html", {
+        "next": request.GET.get("next","/"),
+        "msg" : _("Logout"),
+    })
 
 def login(request):
     """

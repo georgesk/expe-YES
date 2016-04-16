@@ -34,7 +34,7 @@ function initCompressed(){
     var compressed=$("#compressed");
     compressed.sortable();
     compressed.disableSelection();
-    var views = compressed.find("div");
+    var views = compressed.find("div.view");
     for (var i=0;i < views.length; i++){
 	var v = $(views[i]);
 	removeUnrollStuff(v); //don't keep old buttons

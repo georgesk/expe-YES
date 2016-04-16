@@ -1,0 +1,15 @@
+{% extends "srv/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block pagetitle %}
+  {% trans "About the experiment expe-YES" %}.
+{% endblock %}
+{% block content %}
+<form action="/srv/add_comment" method="post">
+    {% csrf_token %}
+    <h1>{% trans "Type your comment below" %}</h1>
+    <textarea name="text" rows="3" cols="80" ></textarea><br/>
+    <input type="submit" value='{% trans "Submit" %}' />
+</form>
+
+{% endblock %}

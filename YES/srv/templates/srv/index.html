@@ -17,8 +17,37 @@
 <script type="text/javascript">
   function view(url){ var i = $("iframe"); i.attr('src',url); }
 </script>
-<div class="view" id="author">{% trans "Authors' description and legal stuff" %}</div>
-<div class="view" id="authorcomment">{% trans "The authors describe the experiment" %}</div>
+<div class="view" id="legalStuff">
+  <h1>{% trans "Authors' description and legal stuff" %}</h1>
+  <div class="author">
+    <span class="copy">© 2016</span>
+    <span class="authorname">Georges Khaznadar</span>
+    <span class="email">&lt;georgesk@debian.org&gt;</span>
+    <span class="license">License: GPL-3+</span>
+  </div>
+</div>
+<div class="view" id="dsc">
+  <h1>{% trans "The authors describe the experiment" %}</h1>
+  <p>
+    {% trans "This experiment is not very interesting. It is just about managing an on/off switch, and an analogic output, and recording analogic measurements. It is only a proof of concept. The buttons and sliders allow you to drive an expEYES-Junior box, with attached components." %}
+  </p>
+  <h2>{% trans "Featured actions and records" %}</h2>
+  <ul>
+    <li>{% trans "The on/off button allows you to light up/down a LED" %}</li>
+    <li>{% trans "The slider allows you to change the frequency of a square wave output which powers a passive buzzer." %}</li>
+    <li>{% trans "The resistance of a light-dependent-resistor is recorded." %}</li>
+    <li>{% trans "The voltage output of an amplified microphone is recorded." %}</li>
+    <li>{% trans "The voltage output of the square wave generator is recorded too." %}</li>
+  </ul>
+  <h2>{% trans "Schematics" %}</h2>
+  <center>
+    <img width="90%" src="{% static 'srv/img/sch1.svg' %}" alt='{% trans "Connections" %}' />
+  </center>
+  <h2>{% trans "Connections" %}</h2>
+  <center>
+    <img width="90%" src="{% static 'srv/img/expeyes1.svg' %}" alt='{% trans "Connections" %}' />
+  </center>
+</div>
 <div class="view" id="comments">
   <h1>{% trans "Comments posted by visitors" %}</h1>
   {% for comment in comments %}

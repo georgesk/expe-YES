@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: expe-YES 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-16 12:45+0200\n"
-"PO-Revision-Date: 2016-04-16 12:46+0200\n"
+"POT-Creation-Date: 2016-04-16 16:05+0200\n"
+"PO-Revision-Date: 2016-04-16 16:18+0200\n"
 "Last-Translator: FULL NAME <georgesk@debian.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -57,47 +57,96 @@ msgstr "Publier"
 msgid "Video feedback"
 msgstr "Retour vidéo"
 
-#: srv/templates/srv/index.html:20
+#: srv/templates/srv/index.html:21
 msgid "Authors' description and legal stuff"
 msgstr "Description des auteurs et mentions légales"
 
-#: srv/templates/srv/index.html:21
+#: srv/templates/srv/index.html:30
 msgid "The authors describe the experiment"
 msgstr "Les auteurs décrivent l'expérience"
 
-#: srv/templates/srv/index.html:23
+#: srv/templates/srv/index.html:32
+msgid ""
+"This experiment is not very interesting. It is just about managing an on/off "
+"switch, and an analogic output, and recording analogic measurements. It is "
+"only a proof of concept. The buttons and sliders allow you to drive an "
+"expEYES-Junior box, with attached components."
+msgstr ""
+"Cette expérience n'est pas très intéressante. Il s'agit juste de commander "
+"un interrupteur en tout ou rien, d'une sortie analogique, et de "
+"l'enregistrement de données analogiques. Il s'agit seulement d\"une preuve "
+"de concept. Les boutons et les curseurs permettent de piloter un boîtier "
+"expEYES-Junior, avec des composants mise en place."
+
+#: srv/templates/srv/index.html:34
+msgid "Featured actions and records"
+msgstr "Actions et enregistrements prévus"
+
+#: srv/templates/srv/index.html:36
+msgid "The on/off button allows you to light up/down a LED"
+msgstr "Le bouton ON/OFF permet d'allumer et d'éteindre une DEL"
+
+#: srv/templates/srv/index.html:37
+msgid ""
+"The slider allows you to change the frequency of a square wave output which "
+"powers a passive buzzer."
+msgstr "Le curseur permet de modifier la fréquence d'un signal carré qui alimente un buzzer passif."
+
+#: srv/templates/srv/index.html:38
+msgid "The resistance of a light-dependent-resistor is recorded."
+msgstr "On enregistre la résistance d'une photorésistance."
+
+#: srv/templates/srv/index.html:39
+msgid "The voltage output of an amplified microphone is recorded."
+msgstr "La tension de sortie d'un microphone amplifié est enregistrée."
+
+#: srv/templates/srv/index.html:40
+msgid "The voltage output of the square wave generator is recorded too."
+msgstr ""
+"La tension de sortie du générateur de signal carré est enregistrée aussi."
+
+#: srv/templates/srv/index.html:42
+msgid "Schematics"
+msgstr "Schéma"
+
+#: srv/templates/srv/index.html:44 srv/templates/srv/index.html.py:46
+#: srv/templates/srv/index.html:48
+msgid "Connections"
+msgstr "Connexions"
+
+#: srv/templates/srv/index.html:52
 msgid "Comments posted by visitors"
 msgstr "Commentaires postés par les visiteurs"
 
-#: srv/templates/srv/index.html:32
+#: srv/templates/srv/index.html:61
 msgid "No comments here yet :("
 msgstr "Pas de commentaire encore :("
 
-#: srv/templates/srv/index.html:35
+#: srv/templates/srv/index.html:64
 msgid "Add comment"
 msgstr "Ajouter un commentaire"
 
-#: srv/templates/srv/index.html:39
+#: srv/templates/srv/index.html:68
 msgid "Reservations"
 msgstr "Réservations"
 
-#: srv/templates/srv/index.html:42
+#: srv/templates/srv/index.html:71
 msgid "Wanted reservation date:"
 msgstr "Date souhaitée pour la réservation :"
 
-#: srv/templates/srv/index.html:45
+#: srv/templates/srv/index.html:74
 msgid "timezone ="
 msgstr "Fuseau horaire ="
 
-#: srv/templates/srv/index.html:49
+#: srv/templates/srv/index.html:78
 msgid "timeslots"
 msgstr "créneaux"
 
-#: srv/templates/srv/index.html:60
+#: srv/templates/srv/index.html:89
 msgid "Parameters and action buttons for the experiment"
 msgstr "Paramètres et boutons d'action pour l'expérience"
 
-#: srv/templates/srv/index.html:66
+#: srv/templates/srv/index.html:95
 msgid "Data delivered by the previous runs of the experiment"
 msgstr "Données issues de lancements précédents de l'expérience"
 
@@ -114,8 +163,6 @@ msgid "... free"
 msgstr "... libre"
 
 #: srv/views.py:114
-#, fuzzy
-#| msgid "logout"
 msgid "Logout"
 msgstr "Se déloger"
 

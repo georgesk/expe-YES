@@ -11,7 +11,7 @@ from .models import Resa, Comment
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .utils import Button
+from .utils import Button, Range
 
 def resa4date(date,user=None):
     """
@@ -67,9 +67,23 @@ def index(request):
     date=request.session.get("date","")
     # contents for the action tab
     actionButtons=[
-        Button(name = "Un",   html =  "2+2", action = "/srv/action/1"),
-        Button(name = "Deux", html =  "3+3", action = "/srv/action/2"),
-        Button(name = "Tris", html =  "4+4", action = "/srv/action/3"),
+        Button(name = "LED",
+               label =  _("Toggle the LED's light"),
+               action = "/srv/action/toggleLED",
+               description=_("Lights the LED up or down. It should modify the LDR's resistance.")
+        ),
+    ]
+    actionRanges=[
+        Range(
+            name="range1",
+            action="/srv/action/freqSqr1",
+            label=_("Frequency"),
+            description=_("Tune the frequency for the buzzer (500 to 10000 Hz). It should have consequences on the frequency and the ammplitude of the microphone's signal."),
+            minval="500",
+            maxval="10000",
+            value="1500",
+            step="10",
+            )
     ]
     context={
         "timeslots": timeslots(15),
@@ -78,6 +92,7 @@ def index(request):
         "logoutURL": '%s?next=%s' % (settings.LOGOUT_URL, request.path),
         "loginURL": '%s?next=%s' % (settings.LOGIN_URL, request.path),
         "buttons": actionButtons,
+        "ranges": actionRanges,
         "comments": Comment.objects.all()
         }
     response = render(request,  'srv/index.html', context)
@@ -89,7 +104,7 @@ def action (request, p):
     service called by action buttons
     @param p given by the urls
     """
-    return JsonResponse({"debug p": p})
+    return JsonResponse({_("action call"): p, _("action state"): _("not yet implemented")})
 
 def add_comment(request):
     """

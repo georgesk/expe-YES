@@ -87,8 +87,14 @@
 </div>
 <div class="view" id="params">
   <h1>{% trans "Parameters and action buttons for the experiment" %}</h1>
+  <h2>{% trans "Action buttons" %}</h2>
   {% for b in buttons %}
   {{b|safe}}
+  <br/>
+  {% endfor %}
+  <h2>{% trans "Range controls" %}</h2>
+  {% for r in ranges %}
+  {{r|safe}}
   <br/>
   {% endfor %}
 </div>
